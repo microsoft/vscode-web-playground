@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"outDir": "out",
-		"lib": [ "es2016", "DOM" ],
+		"lib": [ "es2016", "WebWorker" ],
 		"sourceMap": true
 	},
 
