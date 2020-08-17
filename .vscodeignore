@@ -1,0 +1,8 @@
+.vscode/**
+dist/**
+out/**
+src/**
+.gitignore
+extension.webpack.config.js
+tsconfig.json
+yarn.lock

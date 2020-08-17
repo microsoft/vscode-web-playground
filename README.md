@@ -1,4 +1,8 @@
 
+# VSCode-Web Playground
+
+This extension drives the VSCode web playground with some test data. It is not meant for production use. 
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
