@@ -1,13 +1,15 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "vscode",
   "license": "MIT",
   "enableProposedApi": true,
   "private": true,
   "activationEvents": [
     "onFileSystem:memfs",
+    "onFileSystem:github",
+    "onFileSystem:codespace",
     "onDebug"
   ],
   "browser": "./dist/extension",
@@ -15,6 +17,13 @@
     "vscode": "^1.48.0"
   },
   "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "debug",
+        "contents": "In order to run and debug you'll need  to [create a local workspace](command:_web.openInDesktop).",
+        "when": "github-context"
+      }
+    ],
     "taskDefinitions": [
       {
         "type": "custombuildscript",

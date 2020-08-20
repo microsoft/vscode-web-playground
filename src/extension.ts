@@ -19,15 +19,21 @@ declare const navigator: unknown;
 
 export function activate(context: vscode.ExtensionContext) {
 	if (typeof navigator === 'object') {	// do not run under node.js
-		const memFs = enableFs(context);
 
+		// memFs
 		if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === MemFS.scheme)) {
+			const memFs = enableFs(context);
 			memFs.seed();
 			enableProblems(context);
 			enableTasks();
 			enableDebug(context, memFs);
 
 			vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`memfs:/sample-folder/large.ts`));
+		}
+
+		// GH/CS
+		else if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === 'github' || f.uri.scheme === 'codespace')) {
+			vscode.commands.executeCommand('setContext', 'github-context', true);
 		}
 	}
 }
