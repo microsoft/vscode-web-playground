@@ -1,7 +1,7 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "vscode",
   "license": "MIT",
   "enableProposedApi": true,
@@ -25,7 +25,7 @@
       },
       {
         "view": "terminal",
-        "contents": "In order to run and debug you'll need to [create a local workspace](command:_web.openInDesktop).",
+        "contents": "In order to use the terminal you'll need to [create a local workspace](command:_web.openInDesktop).",
         "when": "github-context"
       }
     ],
