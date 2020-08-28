@@ -1,7 +1,7 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "vscode",
   "license": "MIT",
   "enableProposedApi": true,
@@ -27,6 +27,21 @@
         "view": "terminal",
         "contents": "In order to use the terminal you'll need to [create a local workspace](command:_web.openInDesktop).",
         "when": "github-context"
+      }
+    ],
+    "menus": {
+      "statusBar/windowIndicator": [
+        {
+          "command": "vscode.webPlayground.cloneRepository",
+          "when": "github-context"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vscode.webPlayground.cloneRepository",
+        "title": "Clone and Open the Repository in VS Code",
+        "enablement": "github-context"
       }
     ],
     "taskDefinitions": [

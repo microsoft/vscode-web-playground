@@ -20,6 +20,17 @@ declare const navigator: unknown;
 export function activate(context: vscode.ExtensionContext) {
 	if (typeof navigator === 'object') {	// do not run under node.js
 
+		// Figure out if we have a repository
+		let repositoryOwner: string | undefined = undefined;
+		let repositoryName: string | undefined = undefined;
+		for (const folder of vscode.workspace.workspaceFolders) {
+			if (folder.uri.scheme === 'github' || folder.uri.scheme === 'codespace') {
+				[repositoryOwner, repositoryName] = folder.uri.authority.split('+');
+
+				break;
+			}
+		}
+
 		// memFs
 		if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === MemFS.scheme)) {
 			const memFs = enableFs(context);
@@ -34,6 +45,12 @@ export function activate(context: vscode.ExtensionContext) {
 		// GH/CS
 		else if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === 'github' || f.uri.scheme === 'codespace')) {
 			vscode.commands.executeCommand('setContext', 'github-context', true);
+
+			if (repositoryOwner && repositoryName) {
+				vscode.commands.registerCommand('vscode.webPlayground.cloneRepository', () => {
+					vscode.env.openExternal(vscode.Uri.parse(`${vscode.env.uriScheme}://vscode.git/clone?url=${encodeURIComponent(`https://github.com/${repositoryOwner}/${repositoryName}.git`)}`));
+				});
+			}
 		}
 	}
 }
