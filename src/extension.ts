@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 			memFs.seed();
 			enableProblems(context);
 			enableTasks();
-			enableDebug(context, memFs);
+			// enableDebug(context, memFs); // disabled to test the serverless experience
 
 			vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`memfs:/sample-folder/large.ts`));
 		}
