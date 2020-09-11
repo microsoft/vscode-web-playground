@@ -1,7 +1,7 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "vscode",
   "license": "MIT",
   "enableProposedApi": true,
@@ -60,52 +60,6 @@
             "description": "Additional build flags."
           }
         }
-      }
-    ],
-    "breakpoints2": [
-      {
-        "language": "markdown"
-      }
-    ],
-    "debuggers2": [
-      {
-        "type": "mock",
-        "label": "Mock Debug",
-        "languages": [
-          "markdown"
-        ],
-        "configurationAttributes": {
-          "launch": {
-            "required": [
-              "program"
-            ],
-            "properties": {
-              "program": {
-                "type": "string",
-                "description": "Absolute path to a text file.",
-                "default": "${workspaceFolder}/file.md"
-              },
-              "stopOnEntry": {
-                "type": "boolean",
-                "description": "Automatically stop after launch.",
-                "default": true
-              },
-              "trace": {
-                "type": "boolean",
-                "description": "Enable logging of the Debug Adapter Protocol.",
-                "default": true
-              }
-            }
-          }
-        },
-        "initialConfigurations": [
-          {
-            "type": "mock",
-            "request": "launch",
-            "name": "Debug file.md",
-            "program": "${workspaceFolder}/file.md"
-          }
-        ]
       }
     ],
     "resourceLabelFormatters": [
