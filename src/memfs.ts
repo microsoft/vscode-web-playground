@@ -111,6 +111,7 @@ export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearch
 
 		// some more files & folders
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/folder/`));
+		this.createDirectory(Uri.parse(`memfs:/sample-folder/workspaces/`));
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/large/`));
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/xyz/`));
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/xyz/abc`));
@@ -123,6 +124,22 @@ export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearch
 		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/UPPER.txt`), textEncoder.encode('UPPER'), { create: true, overwrite: true });
 		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/upper.txt`), textEncoder.encode('upper'), { create: true, overwrite: true });
 		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/def/foo.md`), textEncoder.encode('*MemFS*'), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/workspaces/mem.code-workspace`), textEncoder.encode(JSON.stringify({
+			"folders": [
+				{
+					"name": "sample-folder-large",
+					"uri": "memfs:/sample-folder/large"
+				},
+				{
+					"name": "sample-folder-xyz",
+					"uri": "memfs:/sample-folder/xyz"
+				},
+				{
+					"name": "sample-folder-folder",
+					"uri": "memfs:/sample-folder/folder"
+				}
+			]
+		}, undefined, '\t')), { create: true, overwrite: true });
 
 		// some files in different encodings
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/encodings/`));

@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		// memFs
-		if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === MemFS.scheme)) {
+		if (vscode.workspace.workspaceFolders?.some(f => f.uri.scheme === MemFS.scheme) || vscode.workspace.workspaceFile.scheme === MemFS.scheme) {
 			const memFs = enableFs(context);
 			memFs.seed();
 			enableProblems(context);
