@@ -1,7 +1,7 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "vscode",
   "license": "MIT",
   "enableProposedApi": true,
@@ -30,7 +30,7 @@
       }
     ],
     "menus": {
-      "statusBar/windowIndicator": [
+      "statusBar/remoteIndicator": [
         {
           "command": "vscode.webPlayground.cloneRepository",
           "when": "github-context"
