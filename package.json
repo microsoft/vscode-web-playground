@@ -1,7 +1,7 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.14",
+  "version": "0.0.13",
   "publisher": "vscode",
   "license": "MIT",
   "private": true,

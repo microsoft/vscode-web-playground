@@ -4,15 +4,28 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
+	CancellationToken,
 	Disposable,
 	Event,
 	EventEmitter,
 	FileChangeEvent,
 	FileChangeType,
+	FileSearchOptions,
+	FileSearchProvider,
+	FileSearchQuery,
 	FileStat,
 	FileSystemError,
 	FileSystemProvider,
 	FileType,
+	Position,
+	Progress,
+	ProviderResult,
+	Range,
+	TextSearchComplete,
+	TextSearchOptions,
+	TextSearchQuery,
+	TextSearchProvider,
+	TextSearchResult,
 	Uri,
 	workspace,
 } from 'vscode';
@@ -61,7 +74,7 @@ export type Entry = File | Directory;
 
 const textEncoder = new TextEncoder();
 
-export class MemFS implements FileSystemProvider, Disposable {
+export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearchProvider, Disposable {
 	static scheme = 'memfs';
 
 	private readonly disposable: Disposable;
@@ -69,6 +82,8 @@ export class MemFS implements FileSystemProvider, Disposable {
 	constructor() {
 		this.disposable = Disposable.from(
 			workspace.registerFileSystemProvider(MemFS.scheme, this, { isCaseSensitive: true }),
+			// workspace.registerFileSearchProvider(MemFS.scheme, this),
+			// workspace.registerTextSearchProvider(MemFS.scheme, this)
 		);
 	}
 
@@ -383,6 +398,58 @@ export class MemFS implements FileSystemProvider, Disposable {
 
 	private _convertSimple2RegExpPattern(pattern: string): string {
 		return pattern.replace(/[\-\\\{\}\+\?\|\^\$\.\,\[\]\(\)\#\s]/g, '\\$&').replace(/[\*]/g, '.*');
+	}
+
+	// --- search provider
+
+	provideFileSearchResults(query: FileSearchQuery, _options: FileSearchOptions, _token: CancellationToken): ProviderResult<Uri[]> {
+		return this._findFiles(query.pattern);
+	}
+
+	private _findFiles(query: string | undefined): Uri[] {
+		const files = this._getFiles();
+		const result: Uri[] = [];
+
+		const pattern = query ? new RegExp(this._convertSimple2RegExpPattern(query)) : null;
+
+		for (const file of files) {
+			if (!pattern || pattern.exec(file.name)) {
+				result.push(file.uri);
+			}
+		}
+
+		return result;
+	}
+
+	private _textDecoder = new TextDecoder();
+
+	provideTextSearchResults(query: TextSearchQuery, options: TextSearchOptions, progress: Progress<TextSearchResult>, _token: CancellationToken) {
+		const result: TextSearchComplete = { limitHit: false };
+
+		const files = this._findFiles(options.includes[0]);
+		if (files) {
+			for (const file of files) {
+				const content = this._textDecoder.decode(this.readFile(file));
+
+				const lines = content.split('\n');
+				for (let i = 0; i < lines.length; i++) {
+					const line = lines[i];
+					const index = line.indexOf(query.pattern);
+					if (index !== -1) {
+						progress.report({
+							uri: file,
+							ranges: new Range(new Position(i, index), new Position(i, index + query.pattern.length)),
+							preview: {
+								text: line,
+								matches: new Range(new Position(0, index), new Position(0, index + query.pattern.length))
+							}
+						});
+					}
+				}
+			}
+		}
+
+		return result;
 	}
 }
 
