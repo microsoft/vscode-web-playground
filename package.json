@@ -1,15 +1,12 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "vscode",
   "license": "MIT",
-  "enableProposedApi": true,
   "private": true,
   "activationEvents": [
     "onFileSystem:memfs",
-    "onFileSystem:github",
-    "onFileSystem:codespace",
     "onDebug"
   ],
   "browser": "./dist/extension",
@@ -20,28 +17,11 @@
     "viewsWelcome": [
       {
         "view": "debug",
-        "contents": "In order to run and debug you'll need to [create a local workspace](command:vscode.webPlayground.cloneRepository).",
-        "when": "github-context"
+        "contents": "In order to run and debug you'll need to create a local workspace."
       },
       {
         "view": "terminal",
-        "contents": "In order to use the terminal you'll need to [create a local workspace](command:vscode.webPlayground.cloneRepository).",
-        "when": "github-context"
-      }
-    ],
-    "menus": {
-      "statusBar/windowIndicator": [
-        {
-          "command": "vscode.webPlayground.cloneRepository",
-          "when": "github-context"
-        }
-      ]
-    },
-    "commands": [
-      {
-        "command": "vscode.webPlayground.cloneRepository",
-        "title": "Clone and Open the Repository in VS Code",
-        "enablement": "github-context"
+        "contents": "In order to use the terminal you'll need to create a local workspace."
       }
     ],
     "taskDefinitions": [
@@ -59,17 +39,6 @@
             "type": "array",
             "description": "Additional build flags."
           }
-        }
-      }
-    ],
-    "resourceLabelFormatters": [
-      {
-        "scheme": "github",
-        "authority": "*",
-        "formatting": {
-          "label": "${authority}${path}",
-          "separator": "/",
-          "workspaceSuffix": "GitHub"
         }
       }
     ]
