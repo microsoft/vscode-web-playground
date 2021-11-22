@@ -1,10 +1,13 @@
 {
   "name": "vscode-web-playground",
   "description": "Web playground for VS Code",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "publisher": "vscode",
   "license": "MIT",
-  "enableProposedApi": true,
+  "enabledApiProposals": [
+    "fileSearchProvider",
+    "textSearchProvider"
+  ],
   "private": true,
   "activationEvents": [
     "onFileSystem:memfs",
